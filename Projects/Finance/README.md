@@ -1,3 +1,3 @@
-#### Finance Python Code
-Author : Yinlong Thatiyanantaporn
+### Finance Python Code 
+Author : Yinlong Thatiyanantaporn <cr>
 License : MIT license
