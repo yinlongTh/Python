@@ -1,7 +1,7 @@
 # Python Machine Learning
 
-### Basics
-----------------------------------------------------------------
+## Basics
+
 #### Data Types
 - Numerical
   - Discrete
@@ -61,12 +61,12 @@ regr.fit(x, y) #Get a regression object
 predictedCO2 = regr.predict([[2300, 1300]])
 
 </pre>
+<br>
 
-----------------------------------------------------------------
+## Machine Learning
 
-### Machine Learning
-----------------------------------------------------------------
 #### Train & Test
+----------------------------------------------------------------
 : Split data into 2 for 
 - Train Set like 80%
 - Test Set like 20%
@@ -98,28 +98,98 @@ r2test = r2_score(test_y, mymodel(test_x))
 </pre>
 
 #### Decision Tree
+----------------------------------------------------------------
 : A flow chart helping we make decisions based onprevious experience. <br>
 : All Data has to be numerical
 
-
-
+![dataset](https://user-images.githubusercontent.com/108507768/182319743-4a06e55c-afbe-43eb-948f-3c50b23cb294.jpg)
+<br>
+<strong>Import Modules</strong>
 <pre>
 #import modules we need
 
 import pandas
 from sklearn import tree
-import pydotplus
 from sklearn.tree import DecisionTreeClassifier
 import matplotlib.pyplot as plt
 import matplotlib.image as pltimg
 </pre>
+<br>
+<strong>Set Data</strong>
+<pre>
+#Data Setting
+df = pandas.read_csv("shows.csv")
 
+#Use map() to set numerical value to non-numerical value in the df {'UK': 0, 'USA': 1, 'N': 2}
+d = {'UK': 0, 'USA': 1, 'N': 2}
+df['Nationality'] = df['Nationality'].map(d)
+d = {'YES': 1, 'NO': 0}
+df['Go'] = df['Go'].map(d)
+
+#feature columns : columns we try to predict from
+features = ['Age', 'Experience', 'Rank', 'Nationality']
+x = df[features]
+
+#target column : column we try to predict
+y = df['Go']
+</pre>
+<br>
+<strong>Decision Tree Create</strong>
+<pre>
+dtree = DecisionTreeClassifier()
+dtree = dtree.fit(x, y)
+
+#Make an image to observe
+tree.plot_tree(dtree)
+</pre>
+<pre>
+print(dtree.predict([[40, 10, 7, 1]]))
+</pre>
+
+#### Confusion Matrix
+----------------------------------------------------------------
+: It is a table that is used in classification problems to assess where errors in the model were made.
+
+<pre>
+import numpy
+from sklearn import metrics
+
+actual = numpy.random.binomial(1, 0.9, size = 1000) #Actual data set
+predicted = numpy.random.binomial(1, 0.9, size = 1000) #Predicted data set
+
+confusion_matrix = metrics.confusion_matrix(actual, predicted)
+
+cm_display = metrics.ConfusionMatrixDisplay(confusion_matrix = confusion_matrix, display_labels = [False, True])
+
+import matplotlib.pyplot as plt
+
+cm_display.plot()
+plt.show()
+</pre>
+    
+Accuracy <br>
+: Accuracy measures how often the model is correct.
+<pre>
+Accuracy = metrics.accuracy_score(actual, predicted)
+</pre>
+
+Precision
+Of the positives predicted, what percentage is truly positive?
+<pre>
+Precision = metrics.precision_score(actual, predicted)
+</pre>
+
+#### Hierarchical Clustering
+----------------------------------------------------------------
+Unsupervied learning method for clustering data points<br>
+- Unsupervied : does not have to be trained, do not need a "target" variable
 <pre>
 
 </pre>
-    
-    
-    
+
+  
+
+
     
     
     
