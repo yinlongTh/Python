@@ -184,12 +184,77 @@ Precision = metrics.precision_score(actual, predicted)
 Unsupervied learning method for clustering data points<br>
 - Unsupervied : does not have to be trained, do not need a "target" variable
 <pre>
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.cluster.hierarchy import dendrogram, linkage 
+#compute the ward linkage using euclidean distance, and visualize it using a dendrogram
+from sklearn.cluster import AgglomerativeClustering
 
+x = [4, 5, 10, 4, 3, 11, 14 , 6, 10, 12]
+y = [21, 19, 24, 17, 16, 25, 24, 22, 21, 21]
+
+data = list(zip(x, y))
+
+hierarchical_cluster = AgglomerativeClustering(n_clusters=2, affinity='euclidean', linkage='ward')
+labels = hierarchical_cluster.fit_predict(data)
+
+plt.scatter(x, y, c=labels)
+plt.show()
 </pre>
 
-  
+#### Logistic Regression
+----------------------------------------------------------------
+: Solve classification problems by predicting categorical outcomes
+- Binomial : Predicts 2 Outcomes
+- Multinomial : > 2 Outcomes
+<pre>
+import numpy
+
+#X represents the size of a tumor in centimeters.
+X = numpy.array([3.78, 2.44, 2.09, 0.14, 1.72, 1.65, 4.92, 4.37, 4.96, 4.52, 3.69, 5.88]).reshape(-1,1)
+#Note: X has to be reshaped into a column from a row for the LogisticRegression() function to work.
+
+#y represents whether or not the tumor is cancerous (0 for "No", 1 for "Yes").
+y = numpy.array([0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1])
+
+from sklearn import linear_model
+
+logr = linear_model.LogisticRegression()
+logr.fit(X,y)
+
+predicted = logr.predict(numpy.array([3.46]).reshape(-1,1))
+</pre>
+
+<strong>Probability</strong>
+<pre>
+import numpy
+from sklearn import linear_model
+
+X = numpy.array([3.78, 2.44, 2.09, 0.14, 1.72, 1.65, 4.92, 4.37, 4.96, 4.52, 3.69, 5.88]).reshape(-1,1)
+y = numpy.array([0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1])
+
+logr = linear_model.LogisticRegression()
+logr.fit(X,y)
+
+def logit2prob(logr, X):
+  log_odds = logr.coef_ * X + logr.intercept_
+  odds = numpy.exp(log_odds)
+  probability = odds / (1 + odds)
+  return(probability)
+
+print(logit2prob(logr, X))
+</pre>
+
+#### Grid Search
+----------------------------------------------------------------
+    
+    
 
 
-    
-    
-    
+
+
+
+
+
+
+
